@@ -54,7 +54,7 @@ function L(){
         D(i+X, j+Y);
     
   r++;
-  if(r < 75)
+  if(r < F(U()*50)+50)
     setTimeout(L,10 + r);
 }
 
