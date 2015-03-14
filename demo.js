@@ -43,7 +43,6 @@ function C(r, i){
 // },1000);
 
 var m = Math,
-    base = new C(m.E, 0),
     canvas = document.getElementsByTagName("canvas")[0],
     size = 50,
     drawn = {},
@@ -51,7 +50,10 @@ var m = Math,
     cx, cy, radius,
     rect = canvas.getBoundingClientRect(),
     res = 2,
-    itr = 10;
+    itr = 10,
+    a = m.random(),
+    b = m.random(),
+    base = new C(m.E + a,  b);
 
 canvas.style.backgroundColor = "black"
 
@@ -71,7 +73,7 @@ function loop(){
     }
   }
   radius++;
-  if(radius < 50)
+  if(radius < 75)
     setTimeout(loop,10 + radius);
 }
 // loop();
@@ -90,15 +92,15 @@ function draw(x, y){
   x -= x%res;
   y -= y%res;
   if(!drawn[x+","+y]){
-    val = new C(4*(x / canvas.offsetWidth) - 1, 
-                    2*(y / canvas.offsetHeight) - 1);
+    val = new C(8*(a+0.5)*(x / canvas.offsetWidth) - 1, 
+                    4*(b+0.5)*(y / canvas.offsetHeight) - 1);
     var ctx = canvas.getContext("2d");
     var itCounterResult = itCounter(val);
     if(itCounterResult)
     {
       var it = m.floor(255*(1-m.pow(itCounterResult[0]/(itr+1),1)));
       var phase = m.floor((256*(m.sqrt((itCounterResult[1])/(2*m.PI)))));
-      ctx.fillStyle = "rgb(" + it + "," + phase +", " + (255-phase) + ")";
+      ctx.fillStyle = "rgb(" + it + "," + m.floor(phase*a +it*(1-a)) +", " + (255-phase) + ")";
       ctx.fillRect(x, y, res, res);
     }
   }
