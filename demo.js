@@ -51,7 +51,7 @@ var m = Math,
     cx, cy, radius,
     rect = canvas.getBoundingClientRect(),
     res = 2,
-    itr = 20;
+    itr = 10;
 
 canvas.style.backgroundColor = "black"
 
@@ -77,9 +77,9 @@ function loop(){
 // loop();
 
 function itCounter(x){
-  for (var i = 0; i < 4; i++){
+  for (var i = 0; i < itr; i++){
     x = base.e(x);
-    if(x.abs() > 50){
+    if(x.abs() > 20){
       return [i, x.t()];
     }
   }
@@ -96,9 +96,9 @@ function draw(x, y){
     var itCounterResult = itCounter(val);
     if(itCounterResult)
     {
-      var it = m.floor(255*(1 - itCounterResult[0]/itr));
-      var phase = m.floor((256*((itCounterResult[1])/(2*m.PI))));
-      ctx.fillStyle = "rgb(" + (it+2*phase)/3 + "," + (it+phase)/2 +", " + (2*it+phase)/3 + ")";
+      var it = m.floor(255*(1-m.pow(itCounterResult[0]/(itr+1),1)));
+      var phase = m.floor((256*(m.sqrt((itCounterResult[1])/(2*m.PI)))));
+      ctx.fillStyle = "rgb(" + it + "," + phase +", " + (255-phase) + ")";
       ctx.fillRect(x, y, res, res);
     }
   }
